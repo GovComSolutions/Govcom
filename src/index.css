@@ -1,0 +1,257 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 50% 98%;
+    --foreground: 210 40% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 10%;
+
+    /* GovCom brand blue (#2196F3) in HSL ≈ 207, 90%, 54% */
+    --primary: 207 90% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 210 40% 10%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 30% 40%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 210 40% 10%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 207 90% 54%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 210 30% 12%;
+    --foreground: 210 20% 98%;
+
+    --card: 210 30% 15%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 210 30% 15%;
+    --popover-foreground: 210 20% 98%;
+
+    /* Keep dark primary aligned to brand blue but slightly brighter for contrast */
+    --primary: 207 90% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 30% 20%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 210 30% 20%;
+    --muted-foreground: 210 20% 60%;
+
+    --accent: 210 30% 20%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 210 30% 25%;
+    --input: 210 30% 25%;
+    --ring: 207 90% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 md:px-6 lg:px-8 mx-auto;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-primary-foreground rounded-full px-6 py-2.5 font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98];
+  }
+  
+  .section {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+  
+  .glass-card {
+    @apply bg-white/70 dark:bg-black/30 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-xl shadow-lg;
+  }
+  
+  .wave-animation {
+    animation: wave 12s linear infinite;
+    animation-delay: -2s;
+    transform-origin: center bottom;
+  }
+  
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 400ms, transform 400ms;
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+}
+
+@keyframes divider-move {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-40px); }
+  100% { transform: translateX(0); }
+}
+
+.animate-divider-move {
+  animation: divider-move 8s ease-in-out infinite;
+}
+
+.dot-divider {
+  fill: #1a202c;
+}
+.dark .dot-divider {
+  fill: #fff;
+}
+
+@keyframes dots-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(60px); }
+}
+
+.animate-dots-move {
+  animation: dots-move 2s linear infinite;
+}
+
+.circuit-line {
+  stroke: #1a202c;
+  stroke-width: 3;
+  opacity: 0.5;
+  animation: circuit-scan 2.5s linear infinite;
+}
+.dark .circuit-line {
+  stroke: #fff;
+}
+
+.circuit-node {
+  fill: #1a202c;
+  filter: drop-shadow(0 0 6px #60a5fa);
+  animation: node-glow 2.5s linear infinite;
+}
+.dark .circuit-node {
+  fill: #fff;
+  filter: drop-shadow(0 0 8px #3b82f6);
+}
+
+@keyframes circuit-scan {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes node-glow {
+  0% { filter: drop-shadow(0 0 6px #60a5fa); }
+  50% { filter: drop-shadow(0 0 16px #3b82f6); }
+  100% { filter: drop-shadow(0 0 6px #60a5fa); }
+}
+
+.animate-circuit-move {
+  animation: none;
+}
+
+.hex-divider {
+  fill: #1a202c;
+  opacity: 0.7;
+  transform-origin: center;
+  animation: hex-pulse 2.2s ease-in-out infinite;
+}
+.dark .hex-divider {
+  fill: #fff;
+}
+
+/* Staggered animation for wave effect */
+.hex-0 { animation-delay: 0s; }
+.hex-1 { animation-delay: 0.15s; }
+.hex-2 { animation-delay: 0.3s; }
+.hex-3 { animation-delay: 0.45s; }
+.hex-4 { animation-delay: 0.6s; }
+.hex-5 { animation-delay: 0.75s; }
+.hex-6 { animation-delay: 0.9s; }
+.hex-7 { animation-delay: 1.05s; }
+.hex-8 { animation-delay: 1.2s; }
+.hex-9 { animation-delay: 1.35s; }
+.hex-10 { animation-delay: 1.5s; }
+.hex-11 { animation-delay: 1.65s; }
+.hex-12 { animation-delay: 1.8s; }
+.hex-13 { animation-delay: 1.95s; }
+.hex-14 { animation-delay: 2.1s; }
+.hex-15 { animation-delay: 2.25s; }
+.hex-16 { animation-delay: 2.4s; }
+.hex-17 { animation-delay: 2.55s; }
+
+@keyframes hex-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+.animate-hex-wave {
+  animation: none;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Logo divider animation (mirrors hex-divider behavior) */
+.logo-divider { opacity: 0.85; transform-origin: center; animation: hex-pulse 2.2s ease-in-out infinite; }
+.dark .logo-divider { filter: none; opacity: 0.95; }

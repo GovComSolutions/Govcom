@@ -1,0 +1,264 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Project Repository & Tooling",
+        "description": "Create mono-repo for GovCom site, configure Git main branch, add eslint, prettier, husky pre-commit hooks, install npm packages (vite, swiper.js, axios, jest, playwright).",
+        "details": "1. git init govcom && cd govcom\n2. npm init -y\n3. Install dev deps: npm i -D vite eslint prettier eslint-plugin-import husky lint-staged jest @testing-library/dom playwright\n4. Add scripts: \"dev\",\"build\",\"test\",\"e2e\"\n5. Configure .eslintrc, .prettierrc\n6. npx husky install && add pre-commit \"lint-staged\"\n7. Push to remote GitHub/GitLab repo.",
+        "testStrategy": "Run npm run lint to verify zero lint errors. Push dummy commit and ensure Husky blocks if lint fails. Execute npm run test to confirm Jest executes sample test.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create Base HTML5 Template",
+        "description": "Set up index.html with semantic tags header, nav, main, section placeholders, footer.",
+        "details": "Use Vite default index.html. Add <header>, <nav>, <main>, <footer>. Insert meta viewport, title, link to CSS reset. Provide div id=\"root\" for JS injection if needed.",
+        "testStrategy": "Validate HTML5 via W3C validator. Open in browser, use dev-tools Accessibility tree to ensure landmark detection.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Global Style Sheet & Glassmorphism Theme",
+        "description": "Implement global.css containing CSS variables, glassmorphism utilities, typography, color palette, reset.",
+        "details": ":root { --glass-bg: rgba(255,255,255,.2); --blur: 20px; --neon-pink:#FF47B3; --pastel-blue:#7FDBFF; ...}\nDefine .glass {backdrop-filter:blur(var(--blur)); background:var(--glass-bg); border-radius:16px; box-shadow:0 4px 30px rgba(0,0,0,.1);}",
+        "testStrategy": "Open sample component, inspect computed style. Use Lighthouse performance/a11y to check color contrast; target ratios ≥4.5:1 for text.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Responsive Grid & Flex Utility Classes",
+        "description": "Build utilities for Flexbox/Grid plus media query breakpoints (xs, sm, md, lg, xl).",
+        "details": "SCSS mixins or pure CSS @media. Example: .flex-center{display:flex;justify-content:center;align-items:center}. Breakpoints @media(min-width:768px){...}.",
+        "testStrategy": "Resize browser/device emulators ensuring columns wrap and nav collapses at <768px.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Header & Navigation Component",
+        "description": "Implement sticky header with logo, primary nav links, hamburger for mobile.",
+        "details": "HTML: <header class=\"glass\">\n <div class=\"logo\">GovCom</div>\n <nav><ul><li><a href=\"#services\">Services</a>...</ul></nav>\n <button id=\"hamburger\" aria-label=\"Menu\"></button>\n</header>\nJS toggles .open on nav for mobile.",
+        "testStrategy": "Keyboard tab order cycles through logo→links→hamburger. Run axe-core—expect 0 violations. Mobile viewport <576px shows collapsed menu.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Footer Component",
+        "description": "Create always-visible footer with links, social icons, newsletter signup.",
+        "details": "Include <form id=\"newsletter\"> email + submit. Add aria-labels to icons. Embed SVG social logos.",
+        "testStrategy": "Unit test: submit invalid email triggers inline error. Scroll page—footer stays visible using position:sticky bottom:0.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Homepage Hero Section",
+        "description": "Design hero with liquid-glass effect, headline, CTA button.",
+        "details": "Add <section id=\"hero\" class=\"glass\"> <h1>AI-Powered Innovation for the Public Sector</h1><button>Work with Us</button></section>.\nCSS animate subtle background gradient using @keyframes.",
+        "testStrategy": "Lighthouse: Largest Contentful Paint <2.5s. Button focus ring visible.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Homepage Quick Tiles & Impact Stats",
+        "description": "Add 4 quick-access tiles and animated KPI counters.",
+        "details": "Grid of .tile elements linking to key sections. Use IntersectionObserver to start countUp() when visible.",
+        "testStrategy": "Write Jest DOM test mocking IntersectionObserver and verifying that counter increments to final value when in viewport.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Rotating Logos Carousel",
+        "description": "Implement partner logo carousel using Swiper.js.",
+        "details": "npm i swiper; import styles; instantiate new Swiper('.swiper',{loop:true,autoplay:{delay:3000},slidesPerView:'auto'}).",
+        "testStrategy": "Playwright test: ensure auto-scrolling continues for 10s without console errors. Manual: swipe gesture works on touch devices.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "AI Services Index Section",
+        "description": "Create categorized card grid for AI Strategy, DPA, LC/NC, GenAI & ML, CX/EX, PM.",
+        "details": "Section id=\"services\". Each .service-card has icon, title, short blurb. Use data-category attr for future filters.",
+        "testStrategy": "Unit test renders 6 cards. Accessibility tree includes role=\"button\" on cards with tabindex=0.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "AI Center of Excellence Section",
+        "description": "Build toolkit/resource showcase with download buttons and contact invite.",
+        "details": "Accordion list of PDFs, links. CTA button triggers mailto or contact form scroll.",
+        "testStrategy": "Jest test: clicking accordion header toggles aria-expanded attribute.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Industries Served Section",
+        "description": "Interactive tabs for Federal, State/Local, Healthcare, Financial, Partners personas.",
+        "details": "ul.tablist > li[role=tab].  aria-controls for panels. JS switches active tab on click/keypress.",
+        "testStrategy": "Keyboard arrow keys cycle tabs per ARIA pattern. Playwright e2e verifies correct panel visibility.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Case Studies & Insights Gallery",
+        "description": "Grid/list view with filter chips, modal detail viewer.",
+        "details": "Fetch JSON /case-studies.json via fetch(). Insert cards dynamically. Clicking card opens dialog element with shadow-dom slide show.",
+        "testStrategy": "Mock fetch in Jest, expect 10 cards rendered. Verify dialog closes on ESC.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Partner Opportunities Section",
+        "description": "Accordion or tabbed layout describing tech partners, SMB collaborators, talent network.",
+        "details": "Component <section id=\"partners\"> with three tabs. Each contains bullet list and CTA link to contact form.",
+        "testStrategy": "aXe automated scan: zero contrast issues. Manual: screen reader announces selected tab.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Careers Section",
+        "description": "Display open roles via JSON feed, culture statements, benefits carousel.",
+        "details": "GET /jobs.json; render <article class=\"job\">; Apply button leads to external ATS.",
+        "testStrategy": "Unit test that missing jobs JSON shows graceful fallback message.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Contact & Engagement Section",
+        "description": "Smart contact form with validation, calendar scheduler embed, address, chatbot placeholder.",
+        "details": "HTML form id=\"contactForm\". JS validation using Constraint Validation API. Embed Calendly iframe. Chatbot: div#chatbot reserved; later integrate external script.",
+        "testStrategy": "Playwright submits valid and invalid data; expect success toast vs error message. Validate that calendar iframe loads 200 status.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "GovCom Labs Private Hub",
+        "description": "Secure page behind simple password modal (MVP) to access exclusive resources.",
+        "details": "Use localStorage token after password entry. Protect /labs route with JS redirect to / if token absent. Later upgrade to full auth.",
+        "testStrategy": "E2E: attempt to access /labs without token returns redirect code 302 or JS redirect. After correct password, content accessible until storage cleared.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Global Smooth Scrolling & Dynamic Section Loader",
+        "description": "Implement JS scroll-behavior, lazy load images/sections on intersection.",
+        "details": "Add html{scroll-behavior:smooth}. IntersectionObserver loads section.innerHTML via fetch(pageFragment) for performance.",
+        "testStrategy": "Record performance profile; ensure JS lazy loader defers network until 200px before viewport.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Responsive Breakpoint QA",
+        "description": "Comprehensive testing across devices and orientations.",
+        "details": "Use Playwright device emulations list. Generate screenshots diff vs baseline.",
+        "testStrategy": "Automated CI job \"npm run e2e:devices\" passes if all pages return 0 visual diff failures <0.1% threshold.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Performance Optimization",
+        "description": "Compress images, enable lazyload, minify CSS/JS with Vite build, add preload for fonts.",
+        "details": "Use vite-plugin-imagemin. images in /assets optimized to WebP/AVIF. Add <link rel=\"preload\" as=\"font\" ...>.",
+        "testStrategy": "Run Lighthouse; target Performance score ≥90, Total Blocking Time <200 ms.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Accessibility Compliance Pass",
+        "description": "Audit site per WCAG 2.1 AA, implement fixes (focus rings, aria labels, color contrast).",
+        "details": "Use axe-core, Lighthouse a11y. Add skip-to-content link. Ensure form errors have aria-live.",
+        "testStrategy": "Axe-core CLI returns 0 critical/serious issues across all routes. Manual screen reader test on NVDA for nav flow.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Cross-Browser & Legacy Support Testing",
+        "description": "Validate site on Chrome, Edge, Firefox, Safari, including IE11 graceful degradation (static content).",
+        "details": "Use BrowserStack automated sessions. Provide CSS custom property fallbacks for older browsers.",
+        "testStrategy": "Report of test matrix; critical path actions succeed on all modern browsers; IE shows static but functional content.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Deployment & CI/CD Pipeline",
+        "description": "Configure GitHub Actions to build, test, and deploy to Netlify or AWS S3 + CloudFront.",
+        "details": "workflow.yml: jobs build->test->deploy. On push to main, run npm ci, npm run test, npm run build, then netlify-cli deploy --prod.",
+        "testStrategy": "On merge PR, pipeline passes with green ticks. Manual sanity check of live URL returns HTTP 200 and renders correctly.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-04T21:19:37.412Z",
+      "updated": "2025-07-04T22:16:40.873Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
