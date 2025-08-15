@@ -313,11 +313,23 @@ type Message = {
 const initialMessages: Message[] = [
   { 
     role: 'bot', 
-    content: 'Hi! I\'m the GovCom Solutions Assistant. I have comprehensive knowledge about our company, services, case studies, and capabilities. Ask me anything about GovCom Solutions, our services, past projects, or how we can help your organization!\n\n💡 Try asking me about:\n• Our AI and RPA services\n• Case studies and past projects\n• Industries we serve\n• Our capabilities and expertise\n• Specific technologies we work with',
+    content: `**Welcome to GovCom Solutions!** 🤖
+
+I'm your AI assistant with comprehensive knowledge about our company, services, case studies, and capabilities. I'm here to help you learn how GovCom can support your organization!
+
+**💡 Quick Start - Try asking me about:**
+• **AI & RPA Services** - Our automation and intelligence solutions
+• **Case Studies** - Real project examples and outcomes  
+• **Industries We Serve** - Federal, Healthcare, State, Financial, and more
+• **Our Capabilities** - Technical expertise and specializations
+• **Federal Performance** - Our track record with DoD, SSA, DOJ, and more
+
+**Ready to explore?** Just ask me anything about GovCom Solutions!`,
     followUpQuestions: [
       "What services do you offer?",
       "Tell me about your case studies",
-      "What industries do you serve?"
+      "What industries do you serve?",
+      "What's your federal experience?"
     ]
   }
 ];
@@ -603,13 +615,30 @@ export default function ChatbotWidget() {
       const relevantInfo = retrieveRelevantInfo(question);
       
       // Create enhanced prompt with context
-      const enhancedPrompt = `You are the GovCom Solutions Assistant. Use the following information about GovCom Solutions to answer the user's question accurately and helpfully:
+      const enhancedPrompt = `You are the GovCom Solutions Assistant, a professional AI assistant for GovCom Solutions. Use the following information about GovCom Solutions to answer the user's question accurately and helpfully.
 
+IMPORTANT RESPONSE FORMATTING REQUIREMENTS:
+- Always use clear, structured formatting with bullet points (•) where appropriate
+- Use numbered lists (1., 2., 3.) for sequential information
+- Use bold text (**text**) for key terms and important points
+- Use headings (##) for major sections when needed
+- Keep paragraphs short and easy to read
+- Use emojis sparingly but effectively (✅, 🚀, 💡, etc.)
+
+CONTEXT INFORMATION:
 ${relevantInfo}
 
-User Question: ${question}
+USER QUESTION: ${question}
 
-Please provide a helpful, accurate response based on the information above. If the user asks about something not covered in the information, politely redirect them to ask about GovCom's services, case studies, or capabilities. Keep responses professional, informative, and focused on how GovCom can help.`;
+RESPONSE GUIDELINES:
+1. **Structure your answer clearly** with bullet points and numbered lists
+2. **Highlight key information** using bold text
+3. **Make it easy to scan** with clear sections
+4. **Focus on how GovCom can help** the user
+5. **Be professional but approachable**
+6. **Use specific examples** from the knowledge base when relevant
+
+If the user asks about something not covered in the information, politely redirect them to ask about GovCom's services, case studies, or capabilities. Always maintain a helpful, informative tone focused on demonstrating GovCom's expertise and value.`;
 
       const res = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
@@ -646,7 +675,14 @@ Please provide a helpful, accurate response based on the information above. If t
     } catch (err) {
       // Fallback: provide basic information from knowledge base
       const relevantInfo = retrieveRelevantInfo(question);
-      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
+      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:
+
+${relevantInfo}
+
+**Next Steps:**
+• Please try again later for more detailed responses
+• Contact our team directly at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
+• Visit our website: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
       const followUps = generateFollowUpQuestions(question, fallbackResponse);
       setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
@@ -663,7 +699,14 @@ Please provide a helpful, accurate response based on the information above. If t
     } catch (err) {
       // Fallback: provide basic information from knowledge base
       const relevantInfo = retrieveRelevantInfo(input);
-      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
+      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:
+
+${relevantInfo}
+
+**Next Steps:**
+• Please try again later for more detailed responses
+• Contact our team directly at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
+• Visit our website: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
       const followUps = generateFollowUpQuestions(input, fallbackResponse);
       setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
