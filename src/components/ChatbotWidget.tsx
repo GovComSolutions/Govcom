@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // Gemini API endpoint and placeholder for API key
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
@@ -825,12 +827,39 @@ ${relevantInfo}
             <span className="font-semibold">GovCom Chatbot</span>
             <button onClick={handleClose} className="text-white hover:text-gray-200 text-xl">×</button>
           </div>
-          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 bg-background">
+          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 bg-background" style={{ 
+            // Custom styles for better markdown rendering
+            fontSize: '14px',
+            lineHeight: '1.5'
+          }}>
             {messages.map((msg, i) => (
               <div key={i} className={msg.role === 'user' ? 'text-right' : 'text-left'}>
-                <span className={msg.role === 'user' ? 'inline-block bg-primary text-white rounded-lg px-2 py-0.5 my-1 text-sm' : 'inline-block bg-muted text-foreground rounded-lg px-2 py-0.5 my-1 text-sm'}>
-                  {msg.content}
-                </span>
+                <div className={msg.role === 'user' ? 'inline-block bg-primary text-white rounded-lg px-3 py-2 my-1 text-sm max-w-[280px] text-right' : 'inline-block bg-muted text-foreground rounded-lg px-3 py-2 my-1 text-sm max-w-[280px] text-left'}>
+                  {msg.role === 'user' ? (
+                    msg.content
+                  ) : (
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        // Custom styling for markdown elements
+                        h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2 text-foreground" {...props} />,
+                        h2: ({node, ...props}) => <h2 className="text-base font-semibold mb-2 text-foreground" {...props} />,
+                        h3: ({node, ...props}) => <h3 className="text-sm font-semibold mb-1 text-foreground" {...props} />,
+                        p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
+                        ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
+                        li: ({node, ...props}) => <li className="text-sm" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-foreground" {...props} />,
+                        em: ({node, ...props}) => <em className="italic" {...props} />,
+                        blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary pl-3 italic text-muted-foreground" {...props} />,
+                        code: ({node, ...props}) => <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono" {...props} />,
+                        pre: ({node, ...props}) => <pre className="bg-muted p-2 rounded text-xs font-mono overflow-x-auto" {...props} />
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
+                  )}
+                </div>
                 
                 {/* Follow-up questions for bot messages */}
                 {msg.role === 'bot' && msg.followUpQuestions && msg.followUpQuestions.length > 0 && (
