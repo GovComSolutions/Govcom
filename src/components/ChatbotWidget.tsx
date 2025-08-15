@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 // Gemini API endpoint and placeholder for API key
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
-const GEMINI_API_KEY = 'AIzaSyB09LEtlW48pfDd1TzI5E1nrlBLXNukpvg'; // <-- Paste your Gemini API key here
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'YOUR_API_KEY_HERE'; // Use environment variable
 
 // GovCom Knowledge Base for RAG implementation
 const GOVCOM_KNOWLEDGE_BASE = {
