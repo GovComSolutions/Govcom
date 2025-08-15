@@ -4,11 +4,11 @@ import React, { useState, useRef } from 'react';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyB09LEtlW48pfDd1TzI5E1nrlBLXNukpvg'; // Use environment variable or fallback
 
-// GovCom Knowledge Base for RAG implementation
+// GovCom Knowledge Base for RAG implementation - EXTRACTED FROM ACTUAL WEBSITE CONTENT
 const GOVCOM_KNOWLEDGE_BASE = {
   company: {
     name: "GovCom Solutions",
-    description: "A modern consulting and technology company specializing in government digital transformation, AI solutions, and process automation.",
+    description: "GovCom Solutions is a modern consulting and technology company specializing in government digital transformation, AI solutions, and process automation. We serve federal, state, healthcare, and financial sectors with innovative technology solutions.",
     expertise: [
       "Government consulting and digital transformation",
       "AI and Machine Learning solutions",
@@ -18,99 +18,168 @@ const GOVCOM_KNOWLEDGE_BASE = {
       "Organizational effectiveness",
       "Digital solutions and mobile app development",
       "Cloud migration and modernization"
-    ]
+    ],
+    contact: {
+      phone: "410-695-6181",
+      email: "info@govcomsolutions.com",
+      address: "10010 Calla Ct., Laurel, Maryland 20723"
+    }
   },
   services: {
     "AI & Machine Learning": {
-      description: "Deploy secure, domain-aligned AI/ML models to power intelligent automation, predictive insights, and mission-critical decisions.",
+      description: "Deploy secure, domain-aligned AI/ML models to power intelligent automation, predictive insights, and mission-critical decisions. Our AI solutions include AI Models, Chatbots, Predictive Analytics, and Data Extraction capabilities.",
       features: ["AI Models", "Chatbots", "Predictive Analytics", "Data Extraction"],
       complexity: 5,
-      impact: 5
+      impact: 5,
+      category: "AI & Automation"
     },
     "Robotic Process Automation (RPA)": {
-      description: "Automate high-volume, repetitive tasks with bot-driven workflows tailored to public sector operations.",
+      description: "Automate high-volume, repetitive tasks with bot-driven workflows tailored to public sector operations. Our RPA solutions include Bot Development, Process Mapping, Audit Trails, and Compliance Integration.",
       features: ["Bot Development", "Process Mapping", "Audit Trails", "Compliance Integration"],
       complexity: 3,
-      impact: 4
+      impact: 4,
+      category: "Automation"
     },
     "Pega Workflow Automation": {
-      description: "Design and optimize Pega-based solutions for streamlined case management and digital transformation.",
+      description: "Design and optimize Pega-based solutions for streamlined case management and digital transformation. Our Pega services include Pega Workflow, Case Management, Automation, and Platform Optimization.",
       features: ["Pega Workflow", "Case Management", "Automation", "Platform Optimization"],
       complexity: 3,
-      impact: 4
+      impact: 4,
+      category: "Automation"
     },
     "Consulting & Process Discovery": {
-      description: "Identify gaps, bottlenecks, and innovation opportunities through strategic process analysis.",
+      description: "Identify gaps, bottlenecks, and innovation opportunities through strategic process analysis. Our consulting services include Process Mapping, Opportunity Analysis, Innovation Consulting, and Change Enablement.",
       features: ["Process Mapping", "Opportunity Analysis", "Innovation Consulting", "Change Enablement"],
       complexity: 3,
-      impact: 4
+      impact: 4,
+      category: "Consulting"
     },
     "Organizational Effectiveness": {
-      description: "Enhance performance and efficiency through targeted assessments and change strategies.",
+      description: "Enhance performance and efficiency through targeted assessments and change strategies. Our organizational effectiveness services include Performance Analysis, Change Management, Process Optimization, and Strategy Alignment.",
       features: ["Performance Analysis", "Change Management", "Process Optimization", "Strategy Alignment"],
       complexity: 3,
-      impact: 4
+      impact: 4,
+      category: "Consulting"
     },
     "Digital Solutions": {
-      description: "Modernize service delivery with digital platforms designed for scale, usability, and engagement.",
+      description: "Modernize service delivery with digital platforms designed for scale, usability, and engagement. Our digital solutions include Web Portals, Cloud Integration, Mobile Platforms, and Scalable Infrastructure.",
       features: ["Web Portals", "Cloud Integration", "Mobile Platforms", "Scalable Infrastructure"],
       complexity: 4,
-      impact: 5
+      impact: 5,
+      category: "Technology"
     },
     "Mobile App Development": {
-      description: "Develop secure, user-friendly apps for iOS and Android — tailored to government and citizen needs.",
+      description: "Develop secure, user-friendly apps for iOS and Android — tailored to government and citizen needs. Our mobile development services focus on security, usability, and government compliance requirements.",
+      features: ["iOS Development", "Android Development", "Security", "Government Compliance", "User Experience"],
       complexity: 4,
-      impact: 5
+      impact: 5,
+      category: "Technology"
     }
   },
   caseStudies: [
     {
       title: "Digital Modernization for Federal Agency",
-      description: "How GovCom Solutions helped a federal agency modernize legacy systems, improve security, and boost efficiency.",
+      description: "How GovCom Solutions helped a federal agency modernize legacy systems, improve security, and boost efficiency. This project involved cloud migration, security enhancements, and process optimization.",
       industry: "Federal",
-      challenge: "Modernization",
-      technology: "Cloud",
-      impact: "Improved security, boosted efficiency, modernized legacy systems"
+      challenge: "Legacy System Modernization",
+      technology: "Cloud Migration",
+      impact: "Improved security, boosted efficiency, modernized legacy systems, enhanced compliance"
     },
     {
       title: "AI-Driven Insights in Healthcare",
-      description: "Leveraging AI to improve patient outcomes and streamline operations for a major healthcare provider.",
+      description: "Leveraging AI to improve patient outcomes and streamline operations for a major healthcare provider. This project implemented predictive analytics and automated data processing for better patient care.",
       industry: "Healthcare",
-      challenge: "Innovation",
-      technology: "AI",
-      impact: "Improved patient outcomes, streamlined operations"
+      challenge: "Data Processing & Patient Care Optimization",
+      technology: "AI & Machine Learning",
+      impact: "Improved patient outcomes, streamlined operations, enhanced data insights, reduced processing time"
     },
     {
       title: "Cloud Migration for State Government",
-      description: "Seamless migration to the cloud for a state government, enabling agility and cost savings.",
+      description: "Seamless migration to the cloud for a state government, enabling agility and cost savings. This project involved infrastructure modernization and process optimization for better citizen services.",
       industry: "State",
-      challenge: "Modernization",
-      technology: "Cloud",
-      impact: "Enabled agility, cost savings, improved scalability"
+      challenge: "Infrastructure Modernization",
+      technology: "Cloud Migration",
+      impact: "Enabled agility, cost savings, improved scalability, enhanced citizen services"
     },
     {
       title: "RPA Transformation in Financial Services",
-      description: "Implementing robotic process automation to drive efficiency and compliance in the financial sector.",
+      description: "Implementing robotic process automation to drive efficiency and compliance in the financial sector. This project automated repetitive tasks and improved regulatory compliance.",
       industry: "Financial",
-      challenge: "Efficiency",
+      challenge: "Process Automation & Compliance",
       technology: "RPA",
-      impact: "Improved efficiency, enhanced compliance, automated processes"
+      impact: "Improved efficiency, enhanced compliance, automated processes, reduced manual errors"
     }
   ],
-  industries: ["Federal", "Healthcare", "State", "Financial", "Local Government", "Education", "Transportation"],
-  technologies: ["AI/ML", "Cloud", "RPA", "Pega", "Analytics", "Mobile", "Web Development", "Process Automation"],
+  industries: [
+    {
+      name: "Federal Sector",
+      description: "Secure, scalable IT services that drive efficiency, innovation, and mission-critical success for federal agencies. We specialize in compliance, security, and modernization for federal government needs.",
+      services: ["AI & ML", "Cloud Migration", "RPA", "Digital Transformation", "Security & Compliance"]
+    },
+    {
+      name: "Healthcare & Lifesciences",
+      description: "Innovative technology solutions that optimize healthcare operations, enhance patient care, and support regulatory compliance. We focus on HIPAA compliance and healthcare-specific automation.",
+      services: ["AI & ML", "RPA", "Process Optimization", "Compliance", "Data Analytics"]
+    },
+    {
+      name: "State Industry",
+      description: "Tailored IT solutions that enhance efficiency, compliance, and citizen services for state agencies. We help state governments modernize and improve citizen engagement.",
+      services: ["Digital Solutions", "Cloud Migration", "Process Automation", "Citizen Services", "Compliance"]
+    },
+    {
+      name: "Financial Services",
+      description: "Advanced digital solutions that strengthen security, streamline operations, and enhance decision-making in financial institutions. We focus on regulatory compliance and process automation.",
+      services: ["RPA", "AI & ML", "Compliance", "Process Automation", "Security"]
+    },
+    {
+      name: "Local Government",
+      description: "Technology solutions for local government efficiency and citizen service improvement. We help local governments digitize and automate their operations.",
+      services: ["Digital Solutions", "Process Automation", "Citizen Services", "Mobile Apps"]
+    },
+    {
+      name: "Education",
+      description: "Technology solutions for educational institutions to improve learning outcomes and administrative efficiency. We help schools and universities modernize their systems.",
+      services: ["Digital Platforms", "Process Automation", "Student Services", "Administrative Systems"]
+    },
+    {
+      name: "Transportation",
+      description: "Technology solutions for transportation agencies to improve safety, efficiency, and citizen services. We help transportation departments modernize their operations.",
+      services: ["AI & ML", "Process Automation", "Digital Solutions", "Safety Systems"]
+    }
+  ],
+  technologies: [
+    "AI/ML (Artificial Intelligence & Machine Learning)",
+    "Cloud Computing & Migration",
+    "RPA (Robotic Process Automation)",
+    "Pega Platform",
+    "Data Analytics & Business Intelligence",
+    "Mobile Development (iOS & Android)",
+    "Web Development & Portals",
+    "Process Automation & Workflow",
+    "Security & Compliance",
+    "Legacy System Modernization"
+  ],
   capabilities: [
     "End-to-end digital transformation consulting",
     "Custom AI and machine learning solutions",
-    "Legacy system modernization",
-    "Cloud migration and optimization",
+    "Legacy system modernization and cloud migration",
     "Process automation and workflow design",
     "Change management and organizational effectiveness",
     "Mobile and web application development",
     "Compliance and security implementation",
     "Performance optimization and analytics",
-    "Strategic planning and innovation consulting"
-  ]
+    "Strategic planning and innovation consulting",
+    "Government sector expertise and compliance",
+    "Healthcare industry solutions and HIPAA compliance",
+    "Financial services automation and compliance"
+  ],
+  contactInfo: {
+    phone: "410-695-6181",
+    email: "info@govcomsolutions.com",
+    address: "10010 Calla Ct., Laurel, Maryland 20723",
+    hours: "Monday - Sunday: 24 hours",
+    website: "govcomsolutions.com"
+  }
 };
 
 // Message type definition
@@ -210,6 +279,16 @@ export default function ChatbotWidget() {
     
     console.log('RAG: Processing question:', question); // Debug log
     
+    // Check for contact/email questions
+    if (questionLower.includes('contact') || questionLower.includes('email') || questionLower.includes('phone') || questionLower.includes('address') || questionLower.includes('where') || questionLower.includes('send')) {
+      relevantInfo += `Contact Information:\n`;
+      relevantInfo += `Phone: ${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}\n`;
+      relevantInfo += `Email: ${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}\n`;
+      relevantInfo += `Address: ${GOVCOM_KNOWLEDGE_BASE.contactInfo.address}\n`;
+      relevantInfo += `Hours: ${GOVCOM_KNOWLEDGE_BASE.contactInfo.hours}\n`;
+      relevantInfo += `Website: ${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}\n\n`;
+    }
+    
     // Check for company-related questions
     if (questionLower.includes('company') || questionLower.includes('govcom') || questionLower.includes('about')) {
       relevantInfo += `Company: ${GOVCOM_KNOWLEDGE_BASE.company.description}\n`;
@@ -251,7 +330,10 @@ export default function ChatbotWidget() {
     
     // Check for industry questions
     if (questionLower.includes('industry') || questionLower.includes('sector')) {
-      relevantInfo += `Industries we serve: ${GOVCOM_KNOWLEDGE_BASE.industries.join(', ')}\n\n`;
+      relevantInfo += 'Industries we serve:\n';
+      GOVCOM_KNOWLEDGE_BASE.industries.forEach(industry => {
+        relevantInfo += `- ${industry.name}: ${industry.description}\n  Services: ${industry.services.join(', ')}\n\n`;
+      });
     }
     
     // Check for technology questions
