@@ -383,10 +383,16 @@ Please provide a helpful, accurate response based on the information above. If t
         <button
           ref={buttonRef}
           aria-label="Open chatbot"
-          className="rounded-full shadow-lg bg-primary text-white w-14 h-14 flex items-center justify-center hover:bg-primary/80 transition"
+          className="rounded-full shadow-lg bg-primary text-white w-14 h-14 flex items-center justify-center hover:bg-primary/80 transition-all duration-300 hover:scale-110 hover:shadow-xl relative"
           onClick={handleOpen}
         >
-          <svg width="32" height="32" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".2"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+          <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="currentColor" opacity=".1"/>
+            <path d="M8 9h8M8 13h6M8 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" fill="none"/>
+          </svg>
+          {/* Online indicator dot */}
+          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
         </button>
       )}
       {/* Chat Window */}
