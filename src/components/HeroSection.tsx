@@ -53,9 +53,13 @@ export default function HeroSection() {
               with Trusted AI, Intelligent Automation, and Domain-Driven Agents
             </span>
           </h1>
-          <p className="text-xl text-white/95 mb-8 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-lg">
+          <p className="text-xl text-white/95 mb-6 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-lg">
             From Readiness to Results — We Deliver Secure AI Consulting, Workflow Automation, Fine-Tuned Models, and Agentic Solutions Tailored for Public and Enterprise Transformation.
           </p>
+          <div className="text-white/80 mb-8">
+            <span className="text-lg font-medium">— Giri Athikan</span>
+            <span className="text-sm ml-2 opacity-70">Founder & CEO</span>
+          </div>
         </div>
       </div>
       {/* Scroll down indicator */}
