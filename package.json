@@ -11,7 +11,11 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "deploy": "node scripts/trigger-amplify.js",
+    "deploy:dev": "node scripts/trigger-amplify.js develop",
+    "ci:build": "npm ci && npm run build",
+    "ci:test": "npm run test --if-present"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
