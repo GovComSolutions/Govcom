@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyB09LEtlW48pfDd1TzI5E1nrlBLXNukpvg'; // Use environment variable or fallback
 
-// GovCom Knowledge Base for RAG implementation - EXTRACTED FROM ACTUAL WEBSITE CONTENT
+// GovCom Knowledge Base for RAG implementation - EXTRACTED FROM ACTUAL WEBSITE CONTENT + FEDERAL PERFORMANCE DATA
 const GOVCOM_KNOWLEDGE_BASE = {
   company: {
     name: "GovCom Solutions",
@@ -25,6 +25,72 @@ const GOVCOM_KNOWLEDGE_BASE = {
       address: "10010 Calla Ct., Laurel, Maryland 20723"
     }
   },
+  federalPerformance: {
+    overview: "GovCom Solutions has consistently demonstrated excellence in delivering enterprise-grade IT modernization, cloud services, and mission-critical digital transformation initiatives for federal agencies. With a proven track record across the Department of Defense (DoD), the Department of Justice (DOJ), and the Social Security Administration (SSA), GovCom offers deep technical capabilities spanning Agile development, cloud operations (AWS, Azure), web enterprise management, and low-code/no-code platform support (e.g., ServiceNow, Pega).",
+    clients: [
+      "Department of Defense (DoD)",
+      "Social Security Administration (SSA)", 
+      "Department of Justice (DOJ)",
+      "U.S. Air Force",
+      "Science Applications International Corporation (SAIC)"
+    ],
+    coreCapabilities: [
+      "Cloud Services: AWS & Azure provisioning, cost optimization, cloud-native engineering",
+      "Agile DevSecOps: Secure software delivery pipelines with CI/CD automation",
+      "Web Enterprise Hosting: End-to-end management of public-facing government websites",
+      "Platform Support: Implementation and support for ServiceNow and Pega systems",
+      "Cybersecurity & Compliance: FedRAMP, NIST 800-53, and DoD RMF-aligned security services",
+      "24/7 Operations: Help desk, technical support, and global CDN for high-availability systems"
+    ]
+  },
+  federalProjects: [
+    {
+      client: "Department of Defense (DoD) – Defense Media Activity (DMA)",
+      contracts: [
+        "DMA Web Enterprise Business Services (Subcontract, ZTI-2022-002)",
+        "DMA Web NextGen Pilot (HQ0516-23-C-0011)"
+      ],
+      period: "2022–2027 and 2023–2025",
+      scope: "GovCom served as a primary provider of technical and creative services for over 1,000 public-facing DoD websites. Services included infrastructure management across AWS and Microsoft Azure, cloud-based content distribution (via Akamai CDN), migration, software development, and 24/7 technical support, creative content services, SEO, analytics, and survey tools, tailored menu of services for DoD component-specific needs.",
+      outcomes: [
+        "Improved operational uptime and system resilience",
+        "Enabled seamless web experience across components", 
+        "Enhanced public communication capabilities",
+        "Rated Exceptional in every performance category (Quality, Schedule, Reliability, Customer Support)"
+      ]
+    },
+    {
+      client: "Social Security Administration (SSA) – IT Modernization Services",
+      project: "ServiceNow Center of Excellence (COE)",
+      scope: "Supported SSA's digital modernization by establishing and maintaining a ServiceNow COE, delivering Agile lifecycle application development, supporting Pega platform integrations, enabling stakeholder training, system planning, and rapid deployment.",
+      outcomes: [
+        "Enabled SSA's transition from legacy systems",
+        "Achieved multi-million-dollar license savings",
+        "Reduced design and development timelines",
+        "Improved accessibility, usability, and scalability"
+      ]
+    },
+    {
+      client: "Department of Justice – Office of Justice Programs (OJP)",
+      project: "JustGrants Grant Management System",
+      scope: "Designed and delivered an integrated system to address workflow automation for the full grants lifecycle, real-time reporting and analytics, enhanced user experience and data transparency.",
+      outcomes: [
+        "30% reduction in administrative burden",
+        "25% increase in processing efficiency", 
+        "60% improvement in data quality",
+        "Improved inter-agency communication and collaboration"
+      ]
+    },
+    {
+      client: "U.S. Air Force – Cloud One Engineering Services",
+      contract: "P010287088 (via SAIC)",
+      scope: "Provided engineering and cloud support under SAIC subcontract for the Air Force Cloud One platform, focusing on infrastructure-as-a-service (IaaS) optimization, DevSecOps integration, and compliance enforcement.",
+      outcomes: [
+        "All areas of performance rated Exceptional",
+        "Supported agile development and cloud transition needs of the Air Force"
+      ]
+    }
+  ],
   services: {
     "AI & Machine Learning": {
       description: "Deploy secure, domain-aligned AI/ML models to power intelligent automation, predictive insights, and mission-critical decisions. Our AI solutions include AI Models, Chatbots, Predictive Analytics, and Data Extraction capabilities.",
@@ -74,6 +140,20 @@ const GOVCOM_KNOWLEDGE_BASE = {
       complexity: 4,
       impact: 5,
       category: "Technology"
+    },
+    "Federal IT Modernization": {
+      description: "Enterprise-grade IT modernization, cloud services, and mission-critical digital transformation initiatives for federal agencies. Specializing in DoD, DOJ, SSA, and other federal clients with proven track records.",
+      features: ["Cloud Migration", "Legacy System Modernization", "DevSecOps", "FedRAMP Compliance", "24/7 Operations"],
+      complexity: 5,
+      impact: 5,
+      category: "Federal Services"
+    },
+    "Cloud Services": {
+      description: "AWS & Azure provisioning, cost optimization, cloud-native engineering with FedRAMP, NIST 800-53, and DoD RMF-aligned security services. Proven experience managing over 1,000 public-facing government websites.",
+      features: ["AWS & Azure", "Cost Optimization", "Cloud-Native Engineering", "Security & Compliance", "High Availability"],
+      complexity: 4,
+      impact: 5,
+      category: "Federal Services"
     }
   },
   caseStudies: [
@@ -108,56 +188,91 @@ const GOVCOM_KNOWLEDGE_BASE = {
       challenge: "Process Automation & Compliance",
       technology: "RPA",
       impact: "Improved efficiency, enhanced compliance, automated processes, reduced manual errors"
+    },
+    {
+      title: "DoD Web Enterprise Management",
+      description: "Managed over 1,000 public-facing DoD websites with infrastructure across AWS and Microsoft Azure, cloud-based content distribution via Akamai CDN, and 24/7 technical support.",
+      industry: "Federal",
+      challenge: "Large-Scale Web Infrastructure Management",
+      technology: "Cloud Services & Web Hosting",
+      impact: "Improved operational uptime, seamless web experience, enhanced public communication, Exceptional performance ratings"
+    },
+    {
+      title: "SSA ServiceNow COE Implementation",
+      description: "Established and maintained ServiceNow Center of Excellence for SSA, delivering Agile lifecycle application development, Pega platform integrations, and stakeholder training.",
+      industry: "Federal",
+      challenge: "Digital Modernization & Legacy System Transition",
+      technology: "ServiceNow & Pega",
+      impact: "Multi-million-dollar license savings, reduced development timelines, improved accessibility and scalability"
+    },
+    {
+      title: "DOJ JustGrants System Development",
+      description: "Designed and delivered integrated grant management system for DOJ Office of Justice Programs, addressing workflow automation, real-time reporting, and enhanced user experience.",
+      industry: "Federal",
+      challenge: "Grant Management System Modernization",
+      technology: "Custom Development & Workflow Automation",
+      impact: "30% reduction in administrative burden, 25% increase in processing efficiency, 60% improvement in data quality"
     }
   ],
   industries: [
     {
       name: "Federal Sector",
       description: "Secure, scalable IT services that drive efficiency, innovation, and mission-critical success for federal agencies. We specialize in compliance, security, and modernization for federal government needs.",
-      services: ["AI & ML", "Cloud Migration", "RPA", "Digital Transformation", "Security & Compliance"]
+      services: ["AI & ML", "Cloud Migration", "RPA", "Digital Transformation", "Security & Compliance"],
+      performance: "Proven track record with DoD, DOJ, SSA, and U.S. Air Force. Rated Exceptional in all performance categories."
     },
     {
       name: "Healthcare & Lifesciences",
       description: "Innovative technology solutions that optimize healthcare operations, enhance patient care, and support regulatory compliance. We focus on HIPAA compliance and healthcare-specific automation.",
-      services: ["AI & ML", "RPA", "Process Optimization", "Compliance", "Data Analytics"]
+      services: ["AI & ML", "RPA", "Process Optimization", "Compliance", "Data Analytics"],
+      performance: "Successfully implemented AI-driven insights and streamlined operations for major healthcare providers."
     },
     {
       name: "State Industry",
       description: "Tailored IT solutions that enhance efficiency, compliance, and citizen services for state agencies. We help state governments modernize and improve citizen engagement.",
-      services: ["Digital Solutions", "Cloud Migration", "Process Automation", "Citizen Services", "Compliance"]
+      services: ["Digital Solutions", "Cloud Migration", "Process Automation", "Citizen Services", "Compliance"],
+      performance: "Delivered seamless cloud migration and infrastructure modernization for state governments."
     },
     {
       name: "Financial Services",
       description: "Advanced digital solutions that strengthen security, streamline operations, and enhance decision-making in financial institutions. We focus on regulatory compliance and process automation.",
-      services: ["RPA", "AI & ML", "Compliance", "Process Automation", "Security"]
+      services: ["RPA", "AI & ML", "Compliance", "Process Automation", "Security"],
+      performance: "Implemented RPA transformation driving efficiency and compliance in the financial sector."
     },
     {
       name: "Local Government",
       description: "Technology solutions for local government efficiency and citizen service improvement. We help local governments digitize and automate their operations.",
-      services: ["Digital Solutions", "Process Automation", "Citizen Services", "Mobile Apps"]
+      services: ["Digital Solutions", "Process Automation", "Citizen Services", "Mobile Apps"],
+      performance: "Specialized in local government digitization and citizen service enhancement."
     },
     {
       name: "Education",
       description: "Technology solutions for educational institutions to improve learning outcomes and administrative efficiency. We help schools and universities modernize their systems.",
-      services: ["Digital Platforms", "Process Automation", "Student Services", "Administrative Systems"]
+      services: ["Digital Platforms", "Process Automation", "Student Services", "Administrative Systems"],
+      performance: "Focused on educational technology modernization and administrative efficiency."
     },
     {
       name: "Transportation",
       description: "Technology solutions for transportation agencies to improve safety, efficiency, and citizen services. We help transportation departments modernize their operations.",
-      services: ["AI & ML", "Process Automation", "Digital Solutions", "Safety Systems"]
+      services: ["AI & ML", "Process Automation", "Digital Solutions", "Safety Systems"],
+      performance: "Specialized in transportation safety and operational efficiency solutions."
     }
   ],
   technologies: [
     "AI/ML (Artificial Intelligence & Machine Learning)",
-    "Cloud Computing & Migration",
+    "Cloud Computing & Migration (AWS, Azure)",
     "RPA (Robotic Process Automation)",
     "Pega Platform",
+    "ServiceNow Platform",
     "Data Analytics & Business Intelligence",
     "Mobile Development (iOS & Android)",
     "Web Development & Portals",
     "Process Automation & Workflow",
-    "Security & Compliance",
-    "Legacy System Modernization"
+    "Security & Compliance (FedRAMP, NIST 800-53, DoD RMF)",
+    "Legacy System Modernization",
+    "DevSecOps & CI/CD",
+    "Content Delivery Networks (Akamai)",
+    "Agile Development Methodologies"
   ],
   capabilities: [
     "End-to-end digital transformation consulting",
@@ -171,7 +286,13 @@ const GOVCOM_KNOWLEDGE_BASE = {
     "Strategic planning and innovation consulting",
     "Government sector expertise and compliance",
     "Healthcare industry solutions and HIPAA compliance",
-    "Financial services automation and compliance"
+    "Financial services automation and compliance",
+    "Federal IT modernization and cloud services",
+    "24/7 technical support and operations",
+    "Web enterprise hosting and management",
+    "DevSecOps and secure software delivery",
+    "FedRAMP, NIST 800-53, and DoD RMF compliance",
+    "Large-scale government website infrastructure management"
   ],
   contactInfo: {
     phone: "410-695-6181",
@@ -279,6 +400,24 @@ export default function ChatbotWidget() {
     
     console.log('RAG: Processing question:', question); // Debug log
     
+    // Check for federal performance questions
+    if (questionLower.includes('federal') || questionLower.includes('government') || questionLower.includes('dod') || questionLower.includes('ssa') || questionLower.includes('doj') || questionLower.includes('air force') || questionLower.includes('performance') || questionLower.includes('track record') || questionLower.includes('clients')) {
+      relevantInfo += `Federal Performance Overview:\n${GOVCOM_KNOWLEDGE_BASE.federalPerformance.overview}\n\n`;
+      relevantInfo += `Federal Clients:\n${GOVCOM_KNOWLEDGE_BASE.federalPerformance.clients.join(', ')}\n\n`;
+      relevantInfo += `Core Federal Capabilities:\n${GOVCOM_KNOWLEDGE_BASE.federalPerformance.coreCapabilities.map(cap => `- ${cap}`).join('\n')}\n\n`;
+      
+      // Add specific federal projects
+      relevantInfo += `Key Federal Projects:\n`;
+      GOVCOM_KNOWLEDGE_BASE.federalProjects.forEach(project => {
+        relevantInfo += `- ${project.client}\n`;
+        if (project.project) relevantInfo += `  Project: ${project.project}\n`;
+        if (project.contracts) relevantInfo += `  Contracts: ${project.contracts.join(', ')}\n`;
+        if (project.period) relevantInfo += `  Period: ${project.period}\n`;
+        relevantInfo += `  Scope: ${project.scope}\n`;
+        relevantInfo += `  Outcomes: ${project.outcomes.join(', ')}\n\n`;
+      });
+    }
+    
     // Check for contact/email questions
     if (questionLower.includes('contact') || questionLower.includes('email') || questionLower.includes('phone') || questionLower.includes('address') || questionLower.includes('where') || questionLower.includes('send')) {
       relevantInfo += `Contact Information:\n`;
@@ -320,6 +459,16 @@ export default function ChatbotWidget() {
       relevantInfo += `Pega Service:\n${pegaService.description}\nFeatures: ${pegaService.features.join(', ')}\n\n`;
     }
     
+    if (questionLower.includes('cloud') || questionLower.includes('aws') || questionLower.includes('azure')) {
+      const cloudService = GOVCOM_KNOWLEDGE_BASE.services["Cloud Services"];
+      relevantInfo += `Cloud Services:\n${cloudService.description}\nFeatures: ${cloudService.features.join(', ')}\n\n`;
+    }
+    
+    if (questionLower.includes('federal') || questionLower.includes('government') || questionLower.includes('modernization')) {
+      const federalService = GOVCOM_KNOWLEDGE_BASE.services["Federal IT Modernization"];
+      relevantInfo += `Federal IT Modernization:\n${federalService.description}\nFeatures: ${federalService.features.join(', ')}\n\n`;
+    }
+    
     // Check for case study questions
     if (questionLower.includes('case study') || questionLower.includes('project') || questionLower.includes('experience') || questionLower.includes('example')) {
       relevantInfo += 'Case Studies:\n';
@@ -332,7 +481,9 @@ export default function ChatbotWidget() {
     if (questionLower.includes('industry') || questionLower.includes('sector')) {
       relevantInfo += 'Industries we serve:\n';
       GOVCOM_KNOWLEDGE_BASE.industries.forEach(industry => {
-        relevantInfo += `- ${industry.name}: ${industry.description}\n  Services: ${industry.services.join(', ')}\n\n`;
+        relevantInfo += `- ${industry.name}: ${industry.description}\n  Services: ${industry.services.join(', ')}\n`;
+        if (industry.performance) relevantInfo += `  Performance: ${industry.performance}\n`;
+        relevantInfo += '\n';
       });
     }
     
@@ -348,7 +499,7 @@ export default function ChatbotWidget() {
     
     // If no specific matches, provide general company info
     if (!relevantInfo) {
-      relevantInfo = `I'm here to help with information about GovCom Solutions. We specialize in:\n${GOVCOM_KNOWLEDGE_BASE.company.expertise.join(', ')}\n\nAsk me about our services, case studies, industries we serve, or specific capabilities!`;
+      relevantInfo = `I'm here to help with information about GovCom Solutions. We specialize in:\n${GOVCOM_KNOWLEDGE_BASE.company.expertise.join(', ')}\n\nAsk me about our services, case studies, industries we serve, federal performance, or specific capabilities!`;
     }
     
     console.log('RAG: Retrieved info:', relevantInfo); // Debug log
@@ -362,6 +513,12 @@ export default function ChatbotWidget() {
     
     // Define follow-up questions based on different topics
     const followUpQuestions: { [key: string]: string[] } = {
+      'federal performance': [
+        "Would you like to know more about our DoD web enterprise management experience?",
+        "Are you interested in our SSA ServiceNow COE implementation?",
+        "Would you like to hear about our DOJ JustGrants system development?",
+        "Do you need information about our U.S. Air Force cloud engineering work?"
+      ],
       'services': [
         "Would you like to know more about our AI & Machine Learning capabilities?",
         "Are you interested in our RPA automation solutions?",
@@ -398,6 +555,12 @@ export default function ChatbotWidget() {
         "Would you like to discuss Pega integration with existing systems?",
         "Do you need help with Pega workflow design?"
       ],
+      'cloud services': [
+        "Would you like to know more about our AWS and Azure expertise?",
+        "Are you interested in our FedRAMP and compliance services?",
+        "Would you like to discuss our cloud migration strategies?",
+        "Do you need help with cloud cost optimization?"
+      ],
       'general': [
         "Would you like to schedule a consultation with our team?",
         "Are you interested in learning more about our pricing?",
@@ -409,7 +572,9 @@ export default function ChatbotWidget() {
     // Determine the most relevant category based on the question and response
     let category = 'general';
     
-    if (questionLower.includes('service') || questionLower.includes('offer') || responseLower.includes('service')) {
+    if (questionLower.includes('federal') || questionLower.includes('government') || questionLower.includes('dod') || questionLower.includes('ssa') || questionLower.includes('doj') || questionLower.includes('air force') || responseLower.includes('federal')) {
+      category = 'federal performance';
+    } else if (questionLower.includes('service') || questionLower.includes('offer') || responseLower.includes('service')) {
       category = 'services';
     } else if (questionLower.includes('case study') || questionLower.includes('project') || responseLower.includes('case study')) {
       category = 'case studies';
@@ -421,6 +586,8 @@ export default function ChatbotWidget() {
       category = 'rpa';
     } else if (questionLower.includes('pega') || questionLower.includes('workflow') || responseLower.includes('pega')) {
       category = 'pega';
+    } else if (questionLower.includes('cloud') || questionLower.includes('aws') || questionLower.includes('azure') || responseLower.includes('cloud')) {
+      category = 'cloud services';
     }
 
     // Return 2-3 relevant follow-up questions
