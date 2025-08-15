@@ -113,10 +113,22 @@ const GOVCOM_KNOWLEDGE_BASE = {
   ]
 };
 
-const initialMessages = [
+// Message type definition
+type Message = {
+  role: 'user' | 'bot';
+  content: string;
+  followUpQuestions?: string[];
+};
+
+const initialMessages: Message[] = [
   { 
     role: 'bot', 
-    content: 'Hi! I\'m the GovCom Solutions Assistant. I have comprehensive knowledge about our company, services, case studies, and capabilities. Ask me anything about GovCom Solutions, our services, past projects, or how we can help your organization!\n\n💡 Try asking me about:\n• Our AI and RPA services\n• Case studies and past projects\n• Industries we serve\n• Our capabilities and expertise\n• Specific technologies we work with' 
+    content: 'Hi! I\'m the GovCom Solutions Assistant. I have comprehensive knowledge about our company, services, case studies, and capabilities. Ask me anything about GovCom Solutions, our services, past projects, or how we can help your organization!\n\n💡 Try asking me about:\n• Our AI and RPA services\n• Case studies and past projects\n• Industries we serve\n• Our capabilities and expertise\n• Specific technologies we work with',
+    followUpQuestions: [
+      "What services do you offer?",
+      "Tell me about your case studies",
+      "What industries do you serve?"
+    ]
   }
 ];
 
@@ -261,6 +273,79 @@ export default function ChatbotWidget() {
     return relevantInfo;
   }
 
+  // Generate relevant follow-up questions based on the conversation context
+  function generateFollowUpQuestions(question: string, response: string): string[] {
+    const questionLower = question.toLowerCase();
+    const responseLower = response.toLowerCase();
+    
+    // Define follow-up questions based on different topics
+    const followUpQuestions: { [key: string]: string[] } = {
+      'services': [
+        "Would you like to know more about our AI & Machine Learning capabilities?",
+        "Are you interested in our RPA automation solutions?",
+        "Would you like to hear about our Pega workflow automation?",
+        "Do you need help with cloud migration or modernization?"
+      ],
+      'case studies': [
+        "Would you like to hear about more case studies in your industry?",
+        "Are you interested in similar projects we've completed?",
+        "Would you like to discuss how we can apply these solutions to your organization?",
+        "Do you have questions about the technologies used in these projects?"
+      ],
+      'industries': [
+        "Would you like to know more about our experience in your specific industry?",
+        "Are you interested in industry-specific solutions we offer?",
+        "Would you like to discuss compliance requirements for your sector?",
+        "Do you need help with industry-specific challenges?"
+      ],
+      'ai capabilities': [
+        "Would you like to know more about our machine learning models?",
+        "Are you interested in AI implementation strategies?",
+        "Would you like to discuss AI governance and compliance?",
+        "Do you need help with data preparation for AI projects?"
+      ],
+      'rpa': [
+        "Would you like to know more about our RPA implementation process?",
+        "Are you interested in RPA training for your team?",
+        "Would you like to discuss RPA maintenance and support?",
+        "Do you need help identifying processes suitable for automation?"
+      ],
+      'pega': [
+        "Would you like to know more about our Pega development process?",
+        "Are you interested in Pega training and certification?",
+        "Would you like to discuss Pega integration with existing systems?",
+        "Do you need help with Pega workflow design?"
+      ],
+      'general': [
+        "Would you like to schedule a consultation with our team?",
+        "Are you interested in learning more about our pricing?",
+        "Would you like to discuss your specific project requirements?",
+        "Do you have questions about our team's expertise?"
+      ]
+    };
+
+    // Determine the most relevant category based on the question and response
+    let category = 'general';
+    
+    if (questionLower.includes('service') || questionLower.includes('offer') || responseLower.includes('service')) {
+      category = 'services';
+    } else if (questionLower.includes('case study') || questionLower.includes('project') || responseLower.includes('case study')) {
+      category = 'case studies';
+    } else if (questionLower.includes('industry') || questionLower.includes('sector') || responseLower.includes('industry')) {
+      category = 'industries';
+    } else if (questionLower.includes('ai') || questionLower.includes('machine learning') || responseLower.includes('ai')) {
+      category = 'ai capabilities';
+    } else if (questionLower.includes('rpa') || questionLower.includes('robotic') || responseLower.includes('rpa')) {
+      category = 'rpa';
+    } else if (questionLower.includes('pega') || questionLower.includes('workflow') || responseLower.includes('pega')) {
+      category = 'pega';
+    }
+
+    // Return 2-3 relevant follow-up questions
+    const questions = followUpQuestions[category];
+    return questions.slice(0, 3);
+  }
+
   // Enhanced Gemini API call with RAG
   async function sendMessageToGemini(question: string) {
     setLoading(true);
@@ -287,13 +372,18 @@ Please provide a helpful, accurate response based on the information above. If t
       const data = await res.json();
       console.log('Gemini API response:', data); // <-- Debug log
       if (data.error) {
-        setMessages((msgs) => [...msgs, { role: 'bot', content: `Error: ${data.error.message}` }]);
+        const errorMsg = `Error: ${data.error.message}`;
+        const followUps = generateFollowUpQuestions(question, errorMsg);
+        setMessages((msgs) => [...msgs, { role: 'bot', content: errorMsg, followUpQuestions: followUps }]);
       } else {
         const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not find an answer.';
-        setMessages((msgs) => [...msgs, { role: 'bot', content: answer }]);
+        const followUps = generateFollowUpQuestions(question, answer);
+        setMessages((msgs) => [...msgs, { role: 'bot', content: answer, followUpQuestions: followUps }]);
       }
     } catch (err) {
-      setMessages((msgs) => [...msgs, { role: 'bot', content: 'Sorry, there was an error connecting to the chatbot.' }]);
+      const errorMsg = 'Sorry, there was an error connecting to the chatbot.';
+      const followUps = generateFollowUpQuestions(question, errorMsg);
+      setMessages((msgs) => [...msgs, { role: 'bot', content: errorMsg, followUpQuestions: followUps }]);
     }
     setLoading(false);
   }
@@ -308,7 +398,8 @@ Please provide a helpful, accurate response based on the information above. If t
       // Fallback: provide basic information from knowledge base
       const relevantInfo = retrieveRelevantInfo(question);
       const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
-      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse }]);
+      const followUps = generateFollowUpQuestions(question, fallbackResponse);
+      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
   };
 
@@ -324,7 +415,8 @@ Please provide a helpful, accurate response based on the information above. If t
       // Fallback: provide basic information from knowledge base
       const relevantInfo = retrieveRelevantInfo(input);
       const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
-      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse }]);
+      const followUps = generateFollowUpQuestions(input, fallbackResponse);
+      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
   };
 
@@ -426,6 +518,24 @@ Please provide a helpful, accurate response based on the information above. If t
                 <span className={msg.role === 'user' ? 'inline-block bg-primary text-white rounded-lg px-2 py-0.5 my-1 text-sm' : 'inline-block bg-muted text-foreground rounded-lg px-2 py-0.5 my-1 text-sm'}>
                   {msg.content}
                 </span>
+                
+                {/* Follow-up questions for bot messages */}
+                {msg.role === 'bot' && msg.followUpQuestions && msg.followUpQuestions.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    <div className="text-xs text-muted-foreground">💡 You might also want to ask:</div>
+                    <div className="flex flex-wrap gap-2">
+                      {msg.followUpQuestions.map((question, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleQuickQuestion(question)}
+                          className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 px-2 py-1 rounded-md transition-colors border border-blue-200"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
             {loading && <div className="text-xs text-muted-foreground">Thinking…</div>}
