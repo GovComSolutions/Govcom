@@ -742,10 +742,20 @@ Please provide a helpful, accurate response based on the information above. If t
           onClick={handleOpen}
         >
           <img 
-            src="/GovcomBot.png" 
+            src="/GovComBot.png" 
             alt="GovCom Bot" 
             className="w-12 h-12 object-contain"
-            style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+            style={{ 
+              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+              display: 'block',
+              maxWidth: '100%',
+              height: 'auto',
+              border: '1px solid #e5e7eb'
+            }}
+            onError={(e) => {
+              console.error('Failed to load GovcomBot image:', e);
+              e.currentTarget.style.display = 'none';
+            }}
           />
           {/* Online indicator dot */}
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
