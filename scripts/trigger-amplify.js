@@ -5,8 +5,13 @@
  * Usage: node scripts/trigger-amplify.js [branch-name]
  */
 
-const https = require('https');
-const http = require('http');
+import https from 'https';
+import http from 'http';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Configuration
 const AMPLIFY_WEBHOOK_URL = process.env.AMPLIFY_WEBHOOK_URL || '';
@@ -15,6 +20,7 @@ const BRANCH_NAME = process.argv[2] || 'main';
 if (!AMPLIFY_WEBHOOK_URL) {
   console.error('❌ Error: AMPLIFY_WEBHOOK_URL environment variable not set');
   console.log('💡 Set it with: export AMPLIFY_WEBHOOK_URL="your-webhook-url"');
+  console.log('💡 Or create a .env file with the webhook URL');
   process.exit(1);
 }
 
@@ -94,8 +100,8 @@ async function main() {
 }
 
 // Run if called directly
-if (require.main === module) {
+if (import.meta.url === `file://${__filename}`) {
   main();
 }
 
-module.exports = { triggerBuild };
+export { triggerBuild };
