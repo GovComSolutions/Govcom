@@ -298,6 +298,20 @@ Please provide a helpful, accurate response based on the information above. If t
     setLoading(false);
   }
 
+  // Handle quick access questions (immediate response)
+  const handleQuickQuestion = async (question: string) => {
+    setMessages((msgs) => [...msgs, { role: 'user', content: question }]);
+    
+    try {
+      await sendMessageToGemini(question);
+    } catch (err) {
+      // Fallback: provide basic information from knowledge base
+      const relevantInfo = retrieveRelevantInfo(question);
+      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
+      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse }]);
+    }
+  };
+
   // Handle user message
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -429,10 +443,7 @@ Please provide a helpful, accurate response based on the information above. If t
                   ].map((question, idx) => (
                     <button
                       key={idx}
-                      onClick={() => {
-                        setInput(question);
-                        handleSend();
-                      }}
+                      onClick={() => handleQuickQuestion(question)}
                       className="text-xs bg-muted hover:bg-muted/80 text-foreground px-2 py-1 rounded-md transition-colors"
                     >
                       {question}
