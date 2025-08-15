@@ -617,26 +617,28 @@ export default function ChatbotWidget() {
       // Create enhanced prompt with context
       const enhancedPrompt = `You are the GovCom Solutions Assistant, a professional AI assistant for GovCom Solutions. Use the following information about GovCom Solutions to answer the user's question accurately and helpfully.
 
-IMPORTANT RESPONSE FORMATTING REQUIREMENTS:
-- Always use clear, structured formatting with bullet points (•) where appropriate
-- Use numbered lists (1., 2., 3.) for sequential information
-- Use bold text (**text**) for key terms and important points
-- Use headings (##) for major sections when needed
-- Keep paragraphs short and easy to read
-- Use emojis sparingly but effectively (✅, 🚀, 💡, etc.)
+CRITICAL FORMATTING REQUIREMENTS - FOLLOW EXACTLY:
+1. **ALWAYS use bullet points (•) for lists** - never use dashes (-)
+2. **Use proper line breaks** between sections - add empty lines for readability
+3. **Use bold text (**text**) for key terms, company names, and important points**
+4. **Use headings (##) for major sections** when organizing information
+5. **Keep paragraphs short** - maximum 2-3 sentences per paragraph
+6. **Use emojis strategically** (✅, 🚀, 💡, 🎯, 📊) for visual appeal
+7. **Structure responses with clear sections** separated by empty lines
+8. **Use numbered lists (1., 2., 3.) for sequential steps or processes**
 
 CONTEXT INFORMATION:
 ${relevantInfo}
 
 USER QUESTION: ${question}
 
-RESPONSE GUIDELINES:
-1. **Structure your answer clearly** with bullet points and numbered lists
-2. **Highlight key information** using bold text
-3. **Make it easy to scan** with clear sections
-4. **Focus on how GovCom can help** the user
-5. **Be professional but approachable**
-6. **Use specific examples** from the knowledge base when relevant
+RESPONSE STRUCTURE:
+1. **Start with a clear, direct answer** to the user's question
+2. **Organize information in logical sections** with proper spacing
+3. **Use bullet points for features, capabilities, and lists**
+4. **Highlight key benefits and outcomes** in bold
+5. **End with actionable next steps** or contact information
+6. **Ensure every section has proper spacing** for readability
 
 If the user asks about something not covered in the information, politely redirect them to ask about GovCom's services, case studies, or capabilities. Always maintain a helpful, informative tone focused on demonstrating GovCom's expertise and value.`;
 
@@ -679,10 +681,11 @@ If the user asks about something not covered in the information, politely redire
 
 ${relevantInfo}
 
-**Next Steps:**
-• Please try again later for more detailed responses
-• Contact our team directly at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
-• Visit our website: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
+## Next Steps
+
+• **Try again later** for more detailed AI-powered responses
+• **Contact our team directly** at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
+• **Visit our website**: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
       const followUps = generateFollowUpQuestions(question, fallbackResponse);
       setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
@@ -703,10 +706,11 @@ ${relevantInfo}
 
 ${relevantInfo}
 
-**Next Steps:**
-• Please try again later for more detailed responses
-• Contact our team directly at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
-• Visit our website: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
+## Next Steps
+
+• **Try again later** for more detailed AI-powered responses
+• **Contact our team directly** at **${GOVCOM_KNOWLEDGE_BASE.contactInfo.phone}** or **${GOVCOM_KNOWLEDGE_BASE.contactInfo.email}**
+• **Visit our website**: **${GOVCOM_KNOWLEDGE_BASE.contactInfo.website}**`;
       const followUps = generateFollowUpQuestions(input, fallbackResponse);
       setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse, followUpQuestions: followUps }]);
     }
