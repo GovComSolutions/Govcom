@@ -4,8 +4,120 @@ import React, { useState, useRef } from 'react';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = 'AIzaSyB09LEtlW48pfDd1TzI5E1nrlBLXNukpvg'; // <-- Paste your Gemini API key here
 
+// GovCom Knowledge Base for RAG implementation
+const GOVCOM_KNOWLEDGE_BASE = {
+  company: {
+    name: "GovCom Solutions",
+    description: "A modern consulting and technology company specializing in government digital transformation, AI solutions, and process automation.",
+    expertise: [
+      "Government consulting and digital transformation",
+      "AI and Machine Learning solutions",
+      "Robotic Process Automation (RPA)",
+      "Pega workflow automation",
+      "Process discovery and optimization",
+      "Organizational effectiveness",
+      "Digital solutions and mobile app development",
+      "Cloud migration and modernization"
+    ]
+  },
+  services: {
+    "AI & Machine Learning": {
+      description: "Deploy secure, domain-aligned AI/ML models to power intelligent automation, predictive insights, and mission-critical decisions.",
+      features: ["AI Models", "Chatbots", "Predictive Analytics", "Data Extraction"],
+      complexity: 5,
+      impact: 5
+    },
+    "Robotic Process Automation (RPA)": {
+      description: "Automate high-volume, repetitive tasks with bot-driven workflows tailored to public sector operations.",
+      features: ["Bot Development", "Process Mapping", "Audit Trails", "Compliance Integration"],
+      complexity: 3,
+      impact: 4
+    },
+    "Pega Workflow Automation": {
+      description: "Design and optimize Pega-based solutions for streamlined case management and digital transformation.",
+      features: ["Pega Workflow", "Case Management", "Automation", "Platform Optimization"],
+      complexity: 3,
+      impact: 4
+    },
+    "Consulting & Process Discovery": {
+      description: "Identify gaps, bottlenecks, and innovation opportunities through strategic process analysis.",
+      features: ["Process Mapping", "Opportunity Analysis", "Innovation Consulting", "Change Enablement"],
+      complexity: 3,
+      impact: 4
+    },
+    "Organizational Effectiveness": {
+      description: "Enhance performance and efficiency through targeted assessments and change strategies.",
+      features: ["Performance Analysis", "Change Management", "Process Optimization", "Strategy Alignment"],
+      complexity: 3,
+      impact: 4
+    },
+    "Digital Solutions": {
+      description: "Modernize service delivery with digital platforms designed for scale, usability, and engagement.",
+      features: ["Web Portals", "Cloud Integration", "Mobile Platforms", "Scalable Infrastructure"],
+      complexity: 4,
+      impact: 5
+    },
+    "Mobile App Development": {
+      description: "Develop secure, user-friendly apps for iOS and Android — tailored to government and citizen needs.",
+      complexity: 4,
+      impact: 5
+    }
+  },
+  caseStudies: [
+    {
+      title: "Digital Modernization for Federal Agency",
+      description: "How GovCom Solutions helped a federal agency modernize legacy systems, improve security, and boost efficiency.",
+      industry: "Federal",
+      challenge: "Modernization",
+      technology: "Cloud",
+      impact: "Improved security, boosted efficiency, modernized legacy systems"
+    },
+    {
+      title: "AI-Driven Insights in Healthcare",
+      description: "Leveraging AI to improve patient outcomes and streamline operations for a major healthcare provider.",
+      industry: "Healthcare",
+      challenge: "Innovation",
+      technology: "AI",
+      impact: "Improved patient outcomes, streamlined operations"
+    },
+    {
+      title: "Cloud Migration for State Government",
+      description: "Seamless migration to the cloud for a state government, enabling agility and cost savings.",
+      industry: "State",
+      challenge: "Modernization",
+      technology: "Cloud",
+      impact: "Enabled agility, cost savings, improved scalability"
+    },
+    {
+      title: "RPA Transformation in Financial Services",
+      description: "Implementing robotic process automation to drive efficiency and compliance in the financial sector.",
+      industry: "Financial",
+      challenge: "Efficiency",
+      technology: "RPA",
+      impact: "Improved efficiency, enhanced compliance, automated processes"
+    }
+  ],
+  industries: ["Federal", "Healthcare", "State", "Financial", "Local Government", "Education", "Transportation"],
+  technologies: ["AI/ML", "Cloud", "RPA", "Pega", "Analytics", "Mobile", "Web Development", "Process Automation"],
+  capabilities: [
+    "End-to-end digital transformation consulting",
+    "Custom AI and machine learning solutions",
+    "Legacy system modernization",
+    "Cloud migration and optimization",
+    "Process automation and workflow design",
+    "Change management and organizational effectiveness",
+    "Mobile and web application development",
+    "Compliance and security implementation",
+    "Performance optimization and analytics",
+    "Strategic planning and innovation consulting"
+  ]
+};
+
 const initialMessages = [
-  { role: 'bot', content: 'Hi! I’m the GovCom Solutions Assistant. Ask me anything about our company, services, or solutions.' }
+  { 
+    role: 'bot', 
+    content: 'Hi! I\'m the GovCom Solutions Assistant. I have comprehensive knowledge about our company, services, case studies, and capabilities. Ask me anything about GovCom Solutions, our services, past projects, or how we can help your organization!\n\n💡 Try asking me about:\n• Our AI and RPA services\n• Case studies and past projects\n• Industries we serve\n• Our capabilities and expertise\n• Specific technologies we work with' 
+  }
 ];
 
 type Position = {
@@ -79,15 +191,97 @@ export default function ChatbotWidget() {
     document.removeEventListener('mouseup', onMouseUp);
   };
 
-  // Gemini API call
+  // RAG: Retrieve relevant information from knowledge base
+  function retrieveRelevantInfo(question: string): string {
+    const questionLower = question.toLowerCase();
+    let relevantInfo = '';
+    
+    console.log('RAG: Processing question:', question); // Debug log
+    
+    // Check for company-related questions
+    if (questionLower.includes('company') || questionLower.includes('govcom') || questionLower.includes('about')) {
+      relevantInfo += `Company: ${GOVCOM_KNOWLEDGE_BASE.company.description}\n`;
+      relevantInfo += `Expertise: ${GOVCOM_KNOWLEDGE_BASE.company.expertise.join(', ')}\n\n`;
+    }
+    
+    // Check for service-related questions
+    if (questionLower.includes('service') || questionLower.includes('offer') || questionLower.includes('provide')) {
+      relevantInfo += 'Services:\n';
+      Object.entries(GOVCOM_KNOWLEDGE_BASE.services).forEach(([name, service]) => {
+        relevantInfo += `- ${name}: ${service.description}\n`;
+      });
+      relevantInfo += '\n';
+    }
+    
+    // Check for specific services
+    if (questionLower.includes('ai') || questionLower.includes('machine learning') || questionLower.includes('ml')) {
+      const aiService = GOVCOM_KNOWLEDGE_BASE.services["AI & Machine Learning"];
+      relevantInfo += `AI & Machine Learning Service:\n${aiService.description}\nFeatures: ${aiService.features.join(', ')}\n\n`;
+    }
+    
+    if (questionLower.includes('rpa') || questionLower.includes('robotic') || questionLower.includes('automation')) {
+      const rpaService = GOVCOM_KNOWLEDGE_BASE.services["Robotic Process Automation (RPA)"];
+      relevantInfo += `RPA Service:\n${rpaService.description}\nFeatures: ${rpaService.features.join(', ')}\n\n`;
+    }
+    
+    if (questionLower.includes('pega') || questionLower.includes('workflow')) {
+      const pegaService = GOVCOM_KNOWLEDGE_BASE.services["Pega Workflow Automation"];
+      relevantInfo += `Pega Service:\n${pegaService.description}\nFeatures: ${pegaService.features.join(', ')}\n\n`;
+    }
+    
+    // Check for case study questions
+    if (questionLower.includes('case study') || questionLower.includes('project') || questionLower.includes('experience') || questionLower.includes('example')) {
+      relevantInfo += 'Case Studies:\n';
+      GOVCOM_KNOWLEDGE_BASE.caseStudies.forEach(study => {
+        relevantInfo += `- ${study.title}: ${study.description}\n  Industry: ${study.industry}, Challenge: ${study.challenge}, Technology: ${study.technology}\n  Impact: ${study.impact}\n\n`;
+      });
+    }
+    
+    // Check for industry questions
+    if (questionLower.includes('industry') || questionLower.includes('sector')) {
+      relevantInfo += `Industries we serve: ${GOVCOM_KNOWLEDGE_BASE.industries.join(', ')}\n\n`;
+    }
+    
+    // Check for technology questions
+    if (questionLower.includes('technology') || questionLower.includes('tech') || questionLower.includes('tools')) {
+      relevantInfo += `Technologies we work with: ${GOVCOM_KNOWLEDGE_BASE.technologies.join(', ')}\n\n`;
+    }
+    
+    // Check for capability questions
+    if (questionLower.includes('capability') || questionLower.includes('can do') || questionLower.includes('expertise')) {
+      relevantInfo += `Our Capabilities:\n${GOVCOM_KNOWLEDGE_BASE.capabilities.map(cap => `- ${cap}`).join('\n')}\n\n`;
+    }
+    
+    // If no specific matches, provide general company info
+    if (!relevantInfo) {
+      relevantInfo = `I'm here to help with information about GovCom Solutions. We specialize in:\n${GOVCOM_KNOWLEDGE_BASE.company.expertise.join(', ')}\n\nAsk me about our services, case studies, industries we serve, or specific capabilities!`;
+    }
+    
+    console.log('RAG: Retrieved info:', relevantInfo); // Debug log
+    return relevantInfo;
+  }
+
+  // Enhanced Gemini API call with RAG
   async function sendMessageToGemini(question: string) {
     setLoading(true);
     try {
+      // Retrieve relevant information from knowledge base
+      const relevantInfo = retrieveRelevantInfo(question);
+      
+      // Create enhanced prompt with context
+      const enhancedPrompt = `You are the GovCom Solutions Assistant. Use the following information about GovCom Solutions to answer the user's question accurately and helpfully:
+
+${relevantInfo}
+
+User Question: ${question}
+
+Please provide a helpful, accurate response based on the information above. If the user asks about something not covered in the information, politely redirect them to ask about GovCom's services, case studies, or capabilities. Keep responses professional, informative, and focused on how GovCom can help.`;
+
       const res = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: question }] }],
+          contents: [{ parts: [{ text: enhancedPrompt }] }],
         }),
       });
       const data = await res.json();
@@ -109,7 +303,15 @@ export default function ChatbotWidget() {
     if (!input.trim()) return;
     setMessages((msgs) => [...msgs, { role: 'user', content: input }]);
     setInput(''); // Clear input immediately
-    await sendMessageToGemini(input);
+    
+    try {
+      await sendMessageToGemini(input);
+    } catch (err) {
+      // Fallback: provide basic information from knowledge base
+      const relevantInfo = retrieveRelevantInfo(input);
+      const fallbackResponse = `I'm having trouble connecting to my AI service right now, but I can tell you about GovCom Solutions based on my knowledge base:\n\n${relevantInfo}\n\nPlease try again later for more detailed responses, or contact our team directly.`;
+      setMessages((msgs) => [...msgs, { role: 'bot', content: fallbackResponse }]);
+    }
   };
 
   // Open chat and align chat window's bottom right to button's bottom right
@@ -207,6 +409,32 @@ export default function ChatbotWidget() {
               </div>
             ))}
             {loading && <div className="text-xs text-muted-foreground">Thinking…</div>}
+            
+            {/* Quick Access Buttons for Common Questions */}
+            {messages.length === 1 && !loading && (
+              <div className="space-y-2 mt-4">
+                <div className="text-xs text-muted-foreground">Quick questions:</div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "What services do you offer?",
+                    "Tell me about your case studies",
+                    "What industries do you serve?",
+                    "What are your AI capabilities?"
+                  ].map((question, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setInput(question);
+                        handleSend();
+                      }}
+                      className="text-xs bg-muted hover:bg-muted/80 text-foreground px-2 py-1 rounded-md transition-colors"
+                    >
+                      {question}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex items-center border-t border-border px-2 py-2 bg-background rounded-b-xl">
             <input
