@@ -783,15 +783,15 @@ ${relevantInfo}
           aria-label="Open chatbot"
           className="rounded-full shadow-lg w-14 h-14 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110 relative overflow-hidden backdrop-blur-sm"
           style={{
-            background: 'rgba(255, 255, 255, 0.8)',
+            background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08)'
           }}
           onClick={handleOpen}
         >
           <img 
-            src="/GovComBot.png" 
+            src="/GovComBot-v2.png" 
             alt="GovCom Bot" 
             className="w-12 h-12 object-contain"
             style={{ 
