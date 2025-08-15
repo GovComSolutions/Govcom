@@ -738,14 +738,15 @@ Please provide a helpful, accurate response based on the information above. If t
         <button
           ref={buttonRef}
           aria-label="Open chatbot"
-          className="rounded-full shadow-lg bg-primary text-white w-14 h-14 flex items-center justify-center hover:bg-primary/80 transition-all duration-300 hover:scale-110 hover:shadow-xl relative"
+          className="rounded-full shadow-lg bg-white w-14 h-14 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110 relative overflow-hidden"
           onClick={handleOpen}
         >
-          <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="currentColor" opacity=".1"/>
-            <path d="M8 9h8M8 13h6M8 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" fill="none"/>
-          </svg>
+          <img 
+            src="/GovcomBot.png" 
+            alt="GovCom Bot" 
+            className="w-12 h-12 object-contain"
+            style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+          />
           {/* Online indicator dot */}
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
         </button>
